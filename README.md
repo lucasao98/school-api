@@ -28,6 +28,11 @@ Esta API foi desenvolvida como projeto de estudos utilizando o framework Laravel
 
 ## :bar_chart: Estrutura da API
 ```
+POST   /api/signin           - Faz login e retorna um token
+POST   /api/signup           - Cria registro de novo usuário
+```
+
+```
 GET    /api/teachers           - Lista todos os professores
 POST   /api/teachers           - Cria registro de novo professor
 GET    /api/teachers/{id}      - Mostra professor específico
