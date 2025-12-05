@@ -39,3 +39,5 @@ GET    /api/teachers/{id}      - Mostra professor específico
 PATCH  /api/teachers/{id}      - Atualiza dados do professor
 DELETE /api/teachers/{id}      - Remove dados de professor do sistema
 ```
+## :arrow_forward: Executando o projeto
+Para executar o projeto basta criar uma pasta vazia dentro da pasta chamada dbdata.
