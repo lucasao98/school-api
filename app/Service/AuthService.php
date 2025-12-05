@@ -34,13 +34,4 @@ class AuthService
 
         throw new Exception('User not found');
     }
-
-    public function signUp(array $data){
-        try {
-
-            return $this->userRepository->create($data);
-        } catch (Exception $exception) {
-            throw new Exception($exception->getMessage());
-        }
-    }
 }
