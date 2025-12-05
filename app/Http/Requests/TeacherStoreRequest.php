@@ -26,7 +26,9 @@ class TeacherStoreRequest extends FormRequest
             'name' => 'required|string',
             'cpf' => 'required|string|size:11|unique:teachers,cpf',
             'birthday' => 'required', Rule::date()->format('Y-m-d'),
-            'background' => 'required|string'
+            'background' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string'
         ];
     }
 
@@ -39,12 +41,15 @@ class TeacherStoreRequest extends FormRequest
     {
         return [
             'name.required' => 'Name is required',
+            'password.required' => 'Password is required',
             'cpf.unique' => 'Cpf already exists',
             'cpf.size' => 'Cpf must have size 11',
             'cpf.required' => 'Cpf is required',
             'birthday.required' => 'Birthday is required',
             'birthday.date' => 'Birthday must have a date',
             'background.required' => 'Background is required',
+            'email.required' => 'Email is required',
+            'email.unique' => 'Email already exists'
         ];
     }
 }
