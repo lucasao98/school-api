@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignUpRequest;
 use App\Service\AuthService;
 use Exception;
 
@@ -27,24 +26,5 @@ class AuthController extends Controller
                 'detail' => $exception->getMessage()
             ], 400);
         }
-    }
-
-    public function signUp(SignUpRequest $signUpRequest){
-        $validated_signup = $signUpRequest->validated();
-
-        try {
-            $teacher = $this->authService->signUp($validated_signup);
-
-            return response()->json([
-                'data' => $teacher
-            ], 201);
-        } catch (Exception $exception) {
-            return response()->json([
-                'message' => 'Error',
-                'status' => 400,
-                'detail' => $exception->getMessage()
-            ], 400);
-        }
-
     }
 }
