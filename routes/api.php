@@ -5,7 +5,6 @@ use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/signin', [AuthController::class, 'signIn']);
-Route::post('/signup', [AuthController::class, 'signUp']);
 
 Route::prefix('teachers')->controller(TeachersController::class)->middleware('auth:sanctum')->group(function () {
     Route::get('/', 'all');
