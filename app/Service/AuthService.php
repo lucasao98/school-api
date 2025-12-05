@@ -27,7 +27,20 @@ class AuthService
                 throw new Exception('Password is wrong');
             }
 
-            $token = $user->createToken($user->password);
+            switch ($user->role) {
+                case 'admin':
+                    $token = $user->createToken($user->password, ['admin']);
+                    break;
+                case 'principal':
+                    $token = $user->createToken($user->password, ['principal']);
+                    break;
+                case 'teacher':
+                    $token = $user->createToken($user->password, ['teacher']);
+                    break;
+                case 'student':
+                    $token = $user->createToken($user->password, ['student']);
+                    break;
+            }
 
             return $token->plainTextToken;
         }
