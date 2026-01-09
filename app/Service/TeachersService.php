@@ -115,9 +115,7 @@ class TeachersService
         $splittedBirthday = explode("-", $birthday);
 
         foreach ($splittedName as $index => $surname) {
-            if($index == 0){
-                $username .= strtolower($surname[0]);
-            } else if((count($splittedName) - 1) == $index){
+            if((count($splittedName) - 1) == $index){
                 $username .= strtolower($surname);
                 $username .= $splittedBirthday[0][2] . $splittedBirthday[0][3];
             } else{
