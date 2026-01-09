@@ -114,13 +114,16 @@ class TeachersService
         $splittedName = explode(" ", $fullname);
         $splittedBirthday = explode("-", $birthday);
 
-        if(count($splittedName) == 2) {
-            $username .= strtolower($splittedName[0][0]) . strtolower($splittedName[1] . $splittedBirthday[0][2] . $splittedBirthday[0][3]);
-        }
-
-        if(count($splittedName) == 3) {
-            $username .= strtolower($splittedName[0][0]) . strtolower($splittedName[1][0] . strtolower($splittedName[2]) . $splittedBirthday[0][2] . $splittedBirthday[0][3]);
-        }
+        foreach ($splittedName as $index => $surname) {
+            if($index == 0){
+                $username .= strtolower($surname[0]);
+            } else if((count($splittedName) - 1) == $index){
+                $username .= strtolower($surname);
+                $username .= $splittedBirthday[0][2] . $splittedBirthday[0][3];
+            } else{
+                $username .= strtolower($surname[0]);
+            }
+        };
 
         return $username;
     }
