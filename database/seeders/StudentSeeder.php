@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Student;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class StudentSeeder extends Seeder
 {
@@ -17,7 +14,7 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         Student::factory()
-            ->count(2)
+            ->count(5)
             ->create();
     }
 }

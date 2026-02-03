@@ -14,6 +14,13 @@ use Illuminate\Support\Str;
  */
 class StudentFactory extends Factory
 {
+    protected $utilsService;
+
+     public function __construct()
+    {
+        parent::__construct();
+        $this->utilsService = app(UtilsService::class);
+    }
     /**
      * Define the model's default state.
      *
@@ -21,13 +28,17 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
+        $fakeName = fake()->firstName();
+        $fakeLastName = fake()->lastName();
+        $fakeBirthday = fake()->date('Y-m-d');
+
         return [
-            'name' => fake()->name(),
-            'surname' => fake()->lastName(),
+            'name' => $fakeName,
+            'surname' => $fakeLastName,
             'parent_email' => fake()->unique()->safeEmail(),
-            'birthday' => fake()->date('Y-m-d'),
+            'birthday' => $fakeBirthday,
             'user_id' => User::factory()->create([
-                'username' => fake()->userName(),
+                'username' => $this->utilsService->createUsername($fakeName . $fakeLastName, $fakeBirthday),
                 'email' => fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'password' => Hash::make('1234'),
