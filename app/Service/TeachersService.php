@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Repositories\TeacherRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use PHPUnit\Framework\EmptyStringException;
+
 
 class TeachersService
 {
@@ -15,6 +15,7 @@ class TeachersService
     public function __construct(
         private TeacherRepository $teacherRepository,
         private UserService $userService,
+        public UtilsService $utilsService
     )
     {}
 
@@ -31,7 +32,8 @@ class TeachersService
     }
 
     public function store(array $data){
-        $username = $this->createTeacherUsername($data['name'], $data['birthday']);
+        $username = $this->utilsService->createUsername($data['name'], $data['birthday']);
+        $registrationNumber = $this->utilsService->makeRegistrationNumber();
 
         $newUser = [
             'username' => $username,
@@ -50,6 +52,7 @@ class TeachersService
                     'birthday' => $data['birthday'],
                     'background' => $data['background'],
                     'user_id' => $userCreated->id,
+                    'registration_number' => $registrationNumber
                 ];
             }
 
@@ -104,26 +107,6 @@ class TeachersService
         return $teacher;
     }
 
-    private function createTeacherUsername(string $fullname, string $birthday){
-        $username = '';
 
-        if(empty($fullname)){
-            throw new EmptyStringException('Fullname is a empty string');
-        }
-
-        $splittedName = explode(" ", $fullname);
-        $splittedBirthday = explode("-", $birthday);
-
-        foreach ($splittedName as $index => $surname) {
-            if((count($splittedName) - 1) == $index){
-                $username .= strtolower($surname);
-                $username .= $splittedBirthday[0][2] . $splittedBirthday[0][3];
-            } else{
-                $username .= strtolower($surname[0]);
-            }
-        };
-
-        return $username;
-    }
 
 }
