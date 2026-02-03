@@ -19,7 +19,8 @@ class Teacher extends Model
         'cpf',
         'birthday',
         'background',
-        'user_id'
+        'user_id',
+        'registration_number'
     ];
 
     /**
