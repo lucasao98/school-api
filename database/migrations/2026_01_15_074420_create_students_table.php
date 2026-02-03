@@ -1,0 +1,34 @@
+<?php
+
+use App\Models\User;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('students', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable(false);
+            $table->string('surname')->nullable(false);
+            $table->string('parent_email')->nullable(false);
+            $table->date('birthday')->nullable(false);
+            $table->string('student_enrollment', 9)->unique()->nullable(true);
+            $table->foreignIdFor(User::class)->nullable(false);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('students');
+    }
+};
