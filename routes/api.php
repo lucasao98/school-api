@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeachersController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,12 @@ Route::prefix('teachers')->controller(TeachersController::class)->middleware('au
     Route::get('/{teacherId}', 'find');
     Route::patch('/{teacherId}', 'update');
     Route::delete('/{teacherId}', 'destroy');
+});
+
+Route::prefix('student')->controller(StudentController::class)->middleware('auth:sanctum', 'abilities:admin')->group(function () {
+    Route::get('/', 'all');
+    Route::post('/', 'store');
+    Route::get('/{studentId}', 'find');
+    Route::patch('/{studentId}', 'update');
+    Route::delete('/{studentId}', 'destroy');
 });
