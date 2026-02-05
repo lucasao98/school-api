@@ -20,6 +20,8 @@ class Student extends Model
         'surname',
         'parent_email',
         'birthday',
+        'user_id',
+        'student_enrollment'
     ];
 
     /**
