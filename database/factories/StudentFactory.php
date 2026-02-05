@@ -26,36 +26,57 @@ class StudentFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+     public function definition(): array
     {
-        $fakeName = fake()->firstName();
-        $fakeLastName = fake()->lastName();
-        $fakeBirthday = fake()->date('Y-m-d');
+         // Primeiro, criar o User
+        $user = User::factory()->create([
+            'role' => 'student',
+        ]);
+
+        // Gerar nome e sobrenome para o student
+        $name = fake()->firstName();
+        $surname = fake()->lastName();
+        $birthday = fake()->date('Y-m-d');
+
+        // Atualizar o username do user com base nos dados do student
+        $user->update([
+            'username' => app(UtilsService::class)->createUsername(
+                $name . ' ' . $surname,
+                $birthday
+            ),
+        ]);
 
         return [
-            'name' => $fakeName,
-            'surname' => $fakeLastName,
+            'name' => $name,
+            'surname' => $surname,
             'parent_email' => fake()->unique()->safeEmail(),
-            'birthday' => $fakeBirthday,
-            'user_id' => User::factory()->create([
-                'username' => $this->utilsService->createUsername($fakeName . $fakeLastName, $fakeBirthday),
+            'birthday' => $birthday,
+            'student_enrollment' => app(UtilsService::class)->makeRegistrationNumber(),
+            'user_id' => $user->id,
+        ];
+    }
+
+     /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Student $student) {
+            // Criar usuário associado APÓS a criação do estudante
+            $user = User::factory()->create([
+                'username' => app(UtilsService::class)->createUsername(
+                    $student->name . ' ' . $student->surname,
+                    $student->birthday
+                ),
                 'email' => fake()->unique()->safeEmail(),
                 'email_verified_at' => now(),
                 'password' => Hash::make('1234'),
                 'remember_token' => Str::random(10),
                 'role' => 'student',
-            ]),
-        ];
-    }
+            ]);
 
-    /**
-     * Configure the model factory.
-     */
-    public function configure(): static
-    {
-        return $this->afterMaking(function (Student $student) {
-            $utilsService = new UtilsService();
-            $student->student_enrollment = $utilsService->makeRegistrationNumber();
+            $student->user_id = $user->id;
+            $student->save();
         });
     }
 }
