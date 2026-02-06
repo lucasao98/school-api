@@ -1,4 +1,4 @@
-# API RESTful com Laravel - Projeto de Estudos
+# API RESTful com Laravel - Api School
 
 ## :pushpin: Visão Geral
 Esta API foi desenvolvida como projeto de estudos utilizando o framework Laravel, com o objetivo principal de aplicar e consolidar conceitos fundamentais de APIs RESTful seguindo as melhores práticas do mercado.
@@ -26,7 +26,7 @@ Esta API foi desenvolvida como projeto de estudos utilizando o framework Laravel
 - Validation Rules
 - API Resources
 
-## :bar_chart: Estrutura da API
+## :bar_chart: Rotas da API
 ```
 POST   /api/signin           - Faz login e retorna um token
 ```
@@ -38,5 +38,18 @@ GET    /api/teachers/{id}      - Mostra professor específico
 PATCH  /api/teachers/{id}      - Atualiza dados do professor
 DELETE /api/teachers/{id}      - Remove dados de professor do sistema
 ```
+
+```
+GET    /api/student           - Lista todos os alunos
+POST   /api/student           - Cria registro de novo aluno
+GET    /api/student/{id}      - Mostra aluno específico
+PATCH  /api/student/{id}      - Atualiza dados do aluno
+DELETE /api/student/{id}      - Remove dados de aluno do sistema
+```
 ## :arrow_forward: Executando o projeto
-Para executar o projeto basta criar uma pasta vazia dentro da pasta chamada dbdata.
+Para executar o projeto, é necessário ter o docker instalado. Com o docker na sua máquina, basta criar uma pasta vazia dentro da pasta chamada dbdata, e executar o comando:
+
+```
+docker compose up -d
+
+```
